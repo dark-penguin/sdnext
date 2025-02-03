@@ -1,8 +1,8 @@
 # SD.Next Dockerfile
 # docs: <https://github.com/vladmandic/sdnext/wiki/Docker>
 
-# base image
-FROM pytorch/pytorch:2.5.1-cuda12.4-cudnn9-runtime
+FROM rocm/dev-ubuntu-22.04:6.3.2
+# rocm/pytorch:rocm6.3_ubuntu22.04_py3.10_pytorch_release_2.4.0 - too large, requires over 50 GB of free space!
 
 # metadata
 LABEL org.opencontainers.image.vendor="SD.Next"
@@ -19,8 +19,6 @@ LABEL org.opencontainers.image.version="latest"
 # minimum install
 RUN ["apt-get", "-y", "update"]
 RUN ["apt-get", "-y", "install", "git", "build-essential", "google-perftools", "curl"]
-# optional if full cuda-dev is required by some downstream library
-# RUN ["apt-get", "-y", "nvidia-cuda-toolkit"]
 RUN ["/usr/sbin/ldconfig"]
 
 # copy sdnext
@@ -41,11 +39,11 @@ ENV SD_DOCKER=true
 # tcmalloc is not required but it is highly recommended
 ENV LD_PRELOAD=libtcmalloc.so.4  
 # sdnext will run all necessary pip install ops and then exit
-RUN ["python", "/app/launch.py", "--debug", "--uv", "--use-cuda", "--log", "sdnext.log", "--test", "--optional"]
+RUN ["python3", "/app/launch.py", "--debug", "--uv", "--use-rocm", "--log", "sdnext.log", "--test", "--optional"]
 # preinstall additional packages to avoid installation during runtime
 
 # actually run sdnext
-CMD ["python", "launch.py", "--debug", "--skip-all", "--listen", "--quick", "--api-log", "--log", "sdnext.log"]
+CMD ["python3", "launch.py", "--debug", "--skip-all", "--listen", "--quick", "--api-log", "--log", "sdnext.log"]
 
 # expose port
 EXPOSE 7860
