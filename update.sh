@@ -2,7 +2,10 @@
 
 cd "$(dirname "$0")"
 
+export SD_DATADIR="/ssd/sd_data"
+export SD_MODELSDIR="/ssd/sd_models"
+
 export SD_PIP_DEBUG=true
 export SD_INSTALL_DEBUG=true
 
-./webui.sh --debug --listen --use-rocm --update --insecure --test
+./webui.sh --debug --listen --use-rocm --insecure --update --test
