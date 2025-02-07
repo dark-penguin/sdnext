@@ -1,8 +1,11 @@
 # SD.Next Dockerfile
 # docs: <https://github.com/vladmandic/sdnext/wiki/Docker>
 
+#FROM rocm/pytorch:rocm6.3_ubuntu22.04_py3.10_pytorch_release_2.4.0
+# 71 GB out-of-the-box, 78 GB with SDNext installed
+
 FROM rocm/dev-ubuntu-22.04:6.3.2
-# rocm/pytorch:rocm6.3_ubuntu22.04_py3.10_pytorch_release_2.4.0 - too large, requires over 50 GB of free space!
+# 3 GB out-of-the-box, 23 GB with SDNext+Torch installed
 
 # metadata
 LABEL org.opencontainers.image.vendor="SD.Next"
