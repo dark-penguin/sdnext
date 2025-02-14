@@ -8,5 +8,5 @@ cd "$(dirname "$0")"
 [ -z "$SD_DATADIR" ] && echo "SD_DATADIR not set! (check your .env!)" >&2 && exit 1
 [ -z "$SD_MODELSDIR" ] && echo "SD_MODELSDIR not set! (check your .env!)" >&2 && exit 1
 
-export LD_PRELOAD=libtcmalloc.so.4
+export LD_PRELOAD=libjemalloc.so.2
 ./webui.sh --debug --listen --use-rocm --insecure --quick
